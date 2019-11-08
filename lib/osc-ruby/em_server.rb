@@ -18,8 +18,10 @@ module OSC
       @tuples = []
     end
 
-    def run
-      EM::run { EM::open_datagram_socket "0.0.0.0",  @port, Connection }
+    def run(&block)
+      EM::run { EM::open_datagram_socket "0.0.0.0",  @port, Connection
+        block.call
+      }
     end
 
     def add_method(address_pattern, &proc)
